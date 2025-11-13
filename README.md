@@ -1,70 +1,113 @@
-🌡️ ControlTemperaturaApp
+🌡️ **ControlTemperaturaApp**  
+Sistema de control de temperatura vía Bluetooth Low Energy utilizando ESP32 + React Native
 
-Sistema de control de temperatura vía Bluetooth Low Energy (BLE) usando
-ESP32 + React Native
+<div align="center">
 
-📌 Descripción general
+🚀 Monitoreo en tiempo real • 🔧 Control inteligente PWM • 📱 App móvil BLE
 
-ControlTemperaturaApp es una aplicación móvil desarrollada en React
-Native CLI + TypeScript, diseñada para conectarse vía BLE a un ESP32
-encargado de medir temperatura mediante un sensor DHT11 y controlar un
-ventilador de DC mediante PWM.
+</div>
 
-El sistema permite monitorear temperatura en tiempo real, ajustar un
-setpoint, seleccionar entre modo automático y manual, bloquear ajustes,
-visualizar gráficas y almacenar configuración localmente.
+---
 
-🧩 Características principales
+## 📌 Descripción general
 
-🔥 ESP32
+**ControlTemperaturaApp** es una aplicación móvil desarrollada en React Native CLI con TypeScript, diseñada para comunicarse vía Bluetooth Low Energy (BLE) con un ESP32 encargado de medir la temperatura mediante el sensor DHT11 y controlar un ventilador DC por PWM seguro y estable.
 
--   Lectura de temperatura cada 1 segundo usando DHT11
--   Filtro de media móvil para eliminar ruido
--   Lógica de control proporcional por bandas:
-    -   PV ≤ SP − 2 → PWM = 0
-    -   PV = SP → PWM = 50
-    -   PV ≥ SP + 2 → PWM = 100
--   Mapeo seguro de PWM real (35–60 %) para evitar reinicios del ESP32
--   Telemetría JSON cada segundo vía BLE
--   Recepción de comandos desde la app: set_sp, set_mode, set_pwm,
-    set_lock
+La aplicación permite:
 
-📱 App móvil (React Native)
+- Visualizar telemetría y gráficas de temperatura en tiempo real
+- Ajustar el setpoint (20–30 °C)
+- Cambiar entre modo Automático y Manual
+- Bloquear o desbloquear ajustes de control
+- Consultar historial de temperaturas almacenado localmente
+- Visualizar alarmas y estados críticos
+- Guardar preferencias y configuración persistente
 
--   Conexión BLE estable usando react-native-ble-plx
--   Pantalla principal con telemetría y gráfica en tiempo real
--   Historial local de temperatura
--   Visualización de alarmas
--   Configuración persistente con AsyncStorage
--   Bloqueo de controles de setpoint y PWM
--   Barra de navegación inferior
+Todo esto en una interfaz moderna, optimizada para dispositivos Android y modo oscuro.
 
-🛠️ Tecnologías utilizadas
+---
 
--   React Native CLI
--   TypeScript
--   react-native-ble-plx
--   react-native-gifted-charts
--   AsyncStorage
--   C++ para ESP32
--   ArduinoJson, DHT.h, BLEDevice.h
+## 🧩 Características principales
 
-📦 Instalación
+### 🔥 ESP32 – Firmware
 
-git clone https://github.com/EzequielAngel0/ControlTemperaturaApp npm
-install
+- Lectura de temperatura cada segundo mediante DHT11
+- Filtro de media móvil adaptable para eliminación de ruido (5 muestras)
+- Recuperación automática ante lecturas inválidas
+- Telemetría JSON encapsulada enviada cada segundo por BLE
+- Control remoto a través de comandos BLE:
+  - `set_sp` (ajuste setpoint)
+  - `set_mode` (cambio modo)
+  - `set_pwm` (ajuste manual PWM)
+  - `set_lock` (bloqueo de cambios)
+
+### 📱 App móvil (React Native)
+
+- Conexión BLE estable (react-native-ble-plx)
+- Gráfica en tiempo real de temperatura (react-native-gifted-charts)
+- Historial local persistente mediante AsyncStorage
+- Visualización y gestión de alarmas
+- Bloqueo inteligente de controles:
+  - Setpoint en modo AUTO
+  - Setpoint y PWM en modo MANUAL si está bloqueado
+- Barra de navegación inferior personalizada
+- Interfaz responsiva y modo oscuro nativo
+
+---
+
+## 🛠️ Tecnologías utilizadas
+
+**Frontend (App móvil)**
+- React Native CLI
+- TypeScript
+- react-native-ble-plx
+- react-native-gifted-charts
+- AsyncStorage
+
+**Firmware ESP32**
+- C++ (Arduino Core)
+- BLEDevice.h
+- ArduinoJson
+- DHT.h
+- PWM por hardware con `ledcWrite`
+
+---
+
+## 📦 Instalación
+
+### 1️⃣ Clonar el repositorio
+```bash
+git clone https://github.com/EzequielAngel0/ControlTemperaturaApp
+cd ControlTemperaturaApp
+```
+
+### 2️⃣ Instalar dependencias
+```bash
+npm install
+```
+
+### 3️⃣ Ejecutar en Android
+```bash
 npm run android
+```
+*Asegúrate de tener un emulador o dispositivo físico conectado por USB.*
 
-📡 UUID BLE del ESP32
+---
 
-Servicio: 4fafc201-1fb5-459e-8fcc-c5c9c331914b
-TX: beb5483e-36e1-4688-b7f5-ea07361b26a8
-RX: 1c95d5e3-d8f7-413a-bf3d-7a2e5d7be87e
+## 📡 UUID BLE del ESP32
 
-📜 Licencia
+- **Servicio UUID:** `4fafc201-1fb5-459e-8fcc-c5c9c331914b`
+- **TX Notify:** `beb5483e-36e1-4688-b7f5-ea07361b26a8`
+- **RX Write:** `1c95d5e3-d8f7-413a-bf3d-7a2e5d7be87e`
 
-MIT
+---
 
-👨‍💻 Autor
+## 📜 Licencia
 
-Ezequiel Ángel
+Este proyecto se distribuye bajo la licencia **MIT**, permitiendo su uso académico y de desarrollo sin restricciones.
+
+---
+
+## 👨‍💻 Autor
+
+**Angel Ezequiel Barbosa Lomeli**
